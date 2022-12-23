@@ -1,0 +1,29 @@
+name: Haudi Addon
+version: 0.0.1
+slug: haudiaddon
+init: false
+description: Haudi Addon for allow secure remote access.
+url: https://github.com/
+stage: experimental
+arch:
+  - aarch64
+  - amd64
+  - armhf
+  - armv7
+  - i386
+startup: system
+boot: auto
+map:
+  - share:rw
+options:
+  server: ""
+  user: ""
+  port: ""
+  localaddress: ""
+schema:
+  log_level: list(trace|debug|info|notice|warning|error|fatal)?
+  server: str
+  user: str
+  port: int
+  localaddress: str
+  

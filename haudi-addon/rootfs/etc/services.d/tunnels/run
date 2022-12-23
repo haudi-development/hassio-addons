@@ -1,0 +1,25 @@
+#!/usr/bin/with-contenv bashio
+
+bashio::log.debug "Building options"
+declare -a options
+KEYSTORE="/data/ssh-keystore"
+
+options+=(-g)
+options+=(-p 22)
+options+=(-i "$KEYSTORE/tunnels_rsa")
+options+=(-o StrictHostKeyChecking=no)
+options+=(-o ServerAliveInterval=3)
+options+=(-o PubkeyAcceptedKeyTypes=ssh-ed25519)
+options+=(-f)
+options+=(-N)
+options+=(-R $(bashio::config 'port'):$(bashio::config 'localaddress'):8123)
+options+=($(bashio::config 'user')@$(bashio::config 'server'))
+
+bashio::log.debug "Options built"
+
+bashio::log.debug "Command to execute:"
+bashio::log.info "ssh ${options[@]}"
+
+bashio::log.info "Attempting to establish SSH tunnels..."
+ssh ${options[@]}
+while true; do sleep 30; done;
